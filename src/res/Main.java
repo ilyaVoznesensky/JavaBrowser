@@ -39,7 +39,9 @@ import javax.swing.text.html.HTMLFrameHyperlinkEvent;
 public class Main extends JFrame implements HyperlinkListener {
 
 	/**
-	 * Version 0.1
+	 * Created by Ilya 07.05.2016
+	 * 454 line`s P.S. Good job :D
+	 * Version 0.2
 	 */
 	private static final long serialVersionUID = 1L;
 
