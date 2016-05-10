@@ -120,7 +120,7 @@ public class Main extends JFrame implements HyperlinkListener {
 				JTextArea textAreaForGit = new JTextArea();
 				Font BigFontTR = new Font("TimesRoman", Font.BOLD, 17);
 				textAreaForGit.setFont(BigFontTR);
-				textAreaForGit.setText("https://github.com/ilyaVoznesensky/Browser.git");
+				textAreaForGit.setText("https://github.com/ilyaVoznesensky/JavaBrowser");
 
 				panelForGit.add(textAreaForGit);
 
