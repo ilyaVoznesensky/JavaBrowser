@@ -231,6 +231,7 @@ public class Main extends JFrame implements HyperlinkListener {
 
 			public void actionPerformed(ActionEvent e) {
 
+				actionGo();
 			}
 
 		});
