@@ -33,7 +33,6 @@ import javax.swing.event.HyperlinkListener;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLFrameHyperlinkEvent;
 
-//Простой веб-браузер
 public class Main extends JFrame implements HyperlinkListener {
 
 	/**
@@ -44,40 +43,30 @@ public class Main extends JFrame implements HyperlinkListener {
 	private static final long serialVersionUID = 1L;
 
 	private JPanel panelIcon;
-	// кнопки, переключающие страницы
 	private JButton backButton, forwardButton;
-
-	// То, куда мы будем писать веб-страницы
 	private JTextField locationTextField;
-
-	// дисплей для веб-страниц
 	private JEditorPane displayEditorPane;
 
-	// Список страниц
+
 	@SuppressWarnings("rawtypes")
 	private ArrayList pageList = new ArrayList();
 
-	// Конструктор браузера
+
 	public Main() {
-		// Установка названия для фрейма
 		super("Orandetta");
-		// установка дизайна по дизайну самой ОС компьютера
+		/*
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
 
-		}
+		}*/
 
-		// <---Установка значка для фрейма--->
 		ImageIcon i10 = new ImageIcon(getClass().getResource("Browser.jpg"));
 		Image im10 = i10.getImage();
 
 		super.setIconImage(im10);
-		// <---Установка значка для фрейма--->
 
-		// Размеры
 		setSize(740, 580);
-		// закрытие окон
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 
@@ -87,26 +76,24 @@ public class Main extends JFrame implements HyperlinkListener {
 
 		});
 
-		URL imgBan = getClass().getResource("Баннер2.jpg");
+		URL imgBan = getClass().getResource("Banner1.jpg");
 		ImageIcon imgIco = new ImageIcon(imgBan);
 		JLabel labelBan = new JLabel();
 		labelBan.setIcon(imgIco);
 
-		setLocationRelativeTo(null);// для отображения браузера по середине
-									// экрана
-
-		// Меню в котором будет выход и прочее.
+		setLocationRelativeTo(null);
+		
 		JMenuBar menuBar = new JMenuBar();
 
-		JMenu gitMenu = new JMenu("Проект");
+		JMenu gitMenu = new JMenu("| Link on Github |");
 		gitMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		JMenuItem gitMenuItem = new JMenuItem("Ссылка на проект GitHub");
+		JMenuItem gitMenuItem = new JMenuItem("GitHub");
 		gitMenuItem.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent aeGit) {
 
-				JFrame frameGit = new JFrame("Ссылка на GitHub");
+				JFrame frameGit = new JFrame("Link GitHub");
 				frameGit.setSize(450, 100);
 				frameGit.setLocationRelativeTo(null);
 				frameGit.setLayout(new BorderLayout());
@@ -122,17 +109,17 @@ public class Main extends JFrame implements HyperlinkListener {
 
 				panelForGit.add(textAreaForGit);
 
-				// доделать ссылку
 				frameGit.add(panelForGit, BorderLayout.CENTER);
+				frameGit.pack();
 				frameGit.setVisible(true);
 
 			}
 		});
 		gitMenuItem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-		JMenu fileNewBrowser = new JMenu("Копия");
+		JMenu fileNewBrowser = new JMenu("| Copy Browser |");
 		fileNewBrowser.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		JMenuItem fileMenuNewBrowser = new JMenuItem("Открыть браузер в новом окне");
+		JMenuItem fileMenuNewBrowser = new JMenuItem("Add second browser");
 		fileMenuNewBrowser.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -144,19 +131,18 @@ public class Main extends JFrame implements HyperlinkListener {
 		fileMenuNewBrowser.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		fileNewBrowser.add(fileMenuNewBrowser);
 
-		JMenu fileMenu = new JMenu("Выход");
+		JMenu fileMenu = new JMenu("| Exit |");
 		fileMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		fileMenu.setMnemonic(KeyEvent.VK_F);
-		JMenuItem fileExitMenuItem = new JMenuItem("Выход из программы", KeyEvent.VK_X);
+		JMenuItem fileExitMenuItem = new JMenuItem("To exit the program", KeyEvent.VK_X);
 		fileExitMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);// закрытие
+				System.exit(0);
 			}
 
 		});
 		fileExitMenuItem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-		// добавление компонентов
 		gitMenu.add(gitMenuItem);
 		fileMenu.add(fileExitMenuItem);
 		menuBar.add(gitMenu);
@@ -164,21 +150,16 @@ public class Main extends JFrame implements HyperlinkListener {
 		menuBar.add(fileMenu);
 		setJMenuBar(menuBar);
 
-		// Прикрутка кнопок к панели
 
-		JPanel buttonPanel = new JPanel();// панель для кнопок
+		JPanel buttonPanel = new JPanel();
 
 		backButton = new JButton("<");
-		backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));// установка
-																				// курсора
-																				// при
-																				// наведении
-		backButton.addActionListener(new ActionListener() {// функция к кнопке
-															// ("назад")
+		backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		backButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 
-				actionBack();// переход на перд.стр.
+				actionBack();
 
 			}
 
@@ -194,7 +175,7 @@ public class Main extends JFrame implements HyperlinkListener {
 
 			public void actionPerformed(ActionEvent e) {
 
-				actionForward();// переход на след. стр.
+				actionForward();
 
 			}
 
@@ -205,8 +186,7 @@ public class Main extends JFrame implements HyperlinkListener {
 
 		buttonPanel.add(forwardButton);
 
-		locationTextField = new JTextField(35);// создание текстового поля для
-												// поиска
+		locationTextField = new JTextField(35);
 
 		locationTextField.addKeyListener(new KeyAdapter() {
 
@@ -214,7 +194,7 @@ public class Main extends JFrame implements HyperlinkListener {
 
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 
-					actionGo();// функция собственно для поиска
+					actionGo();
 
 				}
 
@@ -224,7 +204,7 @@ public class Main extends JFrame implements HyperlinkListener {
 
 		buttonPanel.add(locationTextField);
 
-		JButton goButton = new JButton("Искать");
+		JButton goButton = new JButton("Search");
 		goButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		goButton.addActionListener(new ActionListener() {
@@ -240,7 +220,6 @@ public class Main extends JFrame implements HyperlinkListener {
 
 		buttonPanel.add(labelBan);
 
-		// Настройка отображения страницы.
 
 		displayEditorPane = new JEditorPane();
 
@@ -251,25 +230,16 @@ public class Main extends JFrame implements HyperlinkListener {
 		displayEditorPane.addHyperlinkListener(this);
 
 		/**
-		 * getContentPane == this т.к. мы для класса использовали extends JFrame
-		 *
-		 * по идеи пользоваться getContentPane правильнее для таких проектов
+		 * getContentPane == this, but get... it`s upgrade version and good tool
 		 */
 
-		getContentPane().setLayout(new BorderLayout());// добавление на фрем
-														// BorderLayout
+		getContentPane().setLayout(new BorderLayout());
 
-		getContentPane().add(buttonPanel, BorderLayout.NORTH);// дисплей для
-																// кнопок и
-																// поиска
+		getContentPane().add(buttonPanel, BorderLayout.NORTH);
 
-		getContentPane().add(new JScrollPane(displayEditorPane), BorderLayout.CENTER);// дисплей
-																						// отображения
-																						// страниц
+		getContentPane().add(new JScrollPane(displayEditorPane), BorderLayout.CENTER);
 
 	}
-
-	// Выход из проги
 
 	private void actionExit() {
 
@@ -277,7 +247,6 @@ public class Main extends JFrame implements HyperlinkListener {
 
 	}
 
-	// Вернуться на страницу, которая была перед текущей страницей
 
 	private void actionBack() {
 
@@ -293,7 +262,6 @@ public class Main extends JFrame implements HyperlinkListener {
 
 	}
 
-	// Вернуться на страницу, которая была после текущей
 
 	private void actionForward() {
 
@@ -309,7 +277,6 @@ public class Main extends JFrame implements HyperlinkListener {
 
 	}
 
-	// Загрузить и показать страницу, указанную в текстовом поле "Искать"
 
 	private void actionGo() {
 
@@ -317,30 +284,24 @@ public class Main extends JFrame implements HyperlinkListener {
 
 		if (verifiedUrl != null) {
 
-			showPage(verifiedUrl, true);// если в текст. поле что-то написано то
-										// вызываем метод showPage
+			showPage(verifiedUrl, true);//showPage
 
 		} else {
-			showError("Неправильная ссылка");
+			showError("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ");
 		}
 
 	}
-
-	// Добавление исключений
 
 	private void showError(String errorMessage) {
 
 		JOptionPane.showMessageDialog(this, errorMessage,
 
-				"Ошибка", JOptionPane.ERROR_MESSAGE);
+				"пїЅпїЅпїЅпїЅпїЅпїЅ", JOptionPane.ERROR_MESSAGE);
 
 	}
 
-	// Проверка URL-адресса.
-
 	private URL verifyUrl(String url) {
 
-		// Разрешить URL-адрес http
 		if (!url.toLowerCase().startsWith("http://")) {
 			return null;
 		}
@@ -355,24 +316,19 @@ public class Main extends JFrame implements HyperlinkListener {
 
 	}
 
-	/*
-	 * Показать указанную страницу и добавить их в список страниц при наличии.
-	 */
+	@SuppressWarnings("unchecked")
 	private void showPage(URL pageUrl, boolean addToList) {
 
-		// Добавление курсора, который при загрузке будет в виде песочных часов
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 		try {
-			// Получить URL-Адрес страницы отображающегося в данный момент.
+		
 			URL currentUrl = displayEditorPane.getPage();
-			// Загрузить и отобразить указанную страницу.
+			
 			displayEditorPane.setPage(pageUrl);
 
-			// Получить URL-адрес новой страницы
 			URL newUrl = displayEditorPane.getPage();
 
-			// Добавить страницу в список
 			if (addToList) {
 				int listSize = pageList.size();
 				if (listSize > 0) {
@@ -387,26 +343,20 @@ public class Main extends JFrame implements HyperlinkListener {
 
 				}
 
-				pageList.add(newUrl.toString());// преобразование адреса в
-												// строку
+				pageList.add(newUrl.toString());
 			}
 
-			// Собственно, добавление на текстфилд адреса текущей страницы
+		
 			locationTextField.setText(newUrl.toString());
 
-			// Обновление кнопок при изменении страницы
 			updateButtons();
 		} catch (Exception e) {
-			// Отображение ошибки
-			showError("Не удалось загрузить страницу");
+			showError("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 		} finally {
-			// Возвращение обычного курсора
 			setCursor(Cursor.getDefaultCursor());
 		}
 
 	}
-
-	/* Обновление кнопок назад и вперед */
 
 	private void updateButtons() {
 
@@ -424,8 +374,6 @@ public class Main extends JFrame implements HyperlinkListener {
 
 	}
 
-	// Обработка гиперссылки при нажатии.
-
 	public void hyperlinkUpdate(HyperlinkEvent event) {
 
 		HyperlinkEvent.EventType eventType = event.getEventType();
@@ -440,7 +388,6 @@ public class Main extends JFrame implements HyperlinkListener {
 		}
 	}
 
-	// Страт браузера
 
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
@@ -448,7 +395,7 @@ public class Main extends JFrame implements HyperlinkListener {
 		 * Orandetta
 		 */
 		Main browser = new Main();
-		browser.show();// отображение
+		browser.show();
 	}
 
 }
