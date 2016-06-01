@@ -287,7 +287,7 @@ public class Main extends JFrame implements HyperlinkListener {
 			showPage(verifiedUrl, true);//showPage
 
 		} else {
-			showError("������������ ������");
+			showError("Error");
 		}
 
 	}
@@ -296,7 +296,7 @@ public class Main extends JFrame implements HyperlinkListener {
 
 		JOptionPane.showMessageDialog(this, errorMessage,
 
-				"������", JOptionPane.ERROR_MESSAGE);
+				"Error", JOptionPane.ERROR_MESSAGE);
 
 	}
 
@@ -351,7 +351,7 @@ public class Main extends JFrame implements HyperlinkListener {
 
 			updateButtons();
 		} catch (Exception e) {
-			showError("�� ������� ��������� ��������");
+			showError("Error");
 		} finally {
 			setCursor(Cursor.getDefaultCursor());
 		}
